@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator,View, Text, StatusBar, Dimensions, StyleSheet, TextInput, Button, Image, TouchableOpacity} from "react-native";
+import { Platform, ActivityIndicator, View, Text, StatusBar, Dimensions, StyleSheet, TextInput, Button, Image, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 const screenWidth = Dimensions.get('window').width;
@@ -21,7 +21,7 @@ class Cocktail extends React.Component {
             ingredient: '',
             displayCocktail: false,
             displayError: false,
-            load:false
+            load: false
         };
     }
 
@@ -30,18 +30,16 @@ class Cocktail extends React.Component {
         // Hide status bar on top of the phone
         StatusBar.setHidden(true);
     }
-
-    // https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin
     fetchCocktails() {
         //faire genre ca charge
         this.setState({
-            load:true,
-            displayCocktail:false,
-            displayError:false,
-            cocktails:[]
+            load: true,
+            displayCocktail: false,
+            displayError: false,
+            cocktails: []
         })
 
-        setTimeout(()=>{
+        setTimeout(() => {
             fetch("https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=" + this.state.ingredient, {
                 method: 'GET',
             })
@@ -53,7 +51,7 @@ class Cocktail extends React.Component {
                         this.setState({
                             displayCocktail: false,
                             displayError: true,
-                            load:false
+                            load: false
                         })
                     } else {
                         // console.log(response.json())
@@ -65,7 +63,7 @@ class Cocktail extends React.Component {
                         this.setState({
                             displayCocktail: false,
                             displayError: true,
-                            load:false
+                            load: false
                         })
                     }
                     else {
@@ -73,15 +71,15 @@ class Cocktail extends React.Component {
                             cocktails: json.drinks,
                             displayCocktail: true,
                             displayError: false,
-                            load:false
+                            load: false
                         })
                     }
                 })
                 .catch((error) => {
                     console.log(error)
                 });
-        },1500)
-        
+        }, 1500)
+
     }
 
     search(text) {
@@ -97,21 +95,25 @@ class Cocktail extends React.Component {
 
                 {/* Make the current view scrollable */}
                 <ScrollView style={styles.ScrollView} ref='test'>
-                    <TextInput placeholder="Choose an ingredient ..." 
+
+                    <TextInput placeholder="Choose an ingredient ..."
                         style={styles.textInput}
+                        value={this.state.ingredient}
                         onChangeText={this.search.bind(this)}
+                        clearButtonMode={"while-editing"}
+
                     />
 
-                        <TouchableOpacity
-                                style={styles.button}
-                                onPress={this.fetchCocktails.bind(this)}
-                        >
-                            <Text style={{color:'white'}}>SEARCH</Text>
-                        </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={this.fetchCocktails.bind(this)}
+                    >
+                        <Text style={{ color: 'white' }}>SEARCH</Text>
+                    </TouchableOpacity>
 
                     {this.state.displayCocktail ? <Text style={styles.found}>Here's what we've found for you :</Text> : null}
-                    {this.state.load ?  <ActivityIndicator style={styles.loader} size="large" color="#0000ff" /> : null}
-                    
+                    {this.state.load ? <ActivityIndicator style={styles.loader} size="large" color="#0000ff" /> : null}
+
 
 
                     {/* Foreach loop */}
@@ -121,9 +123,9 @@ class Cocktail extends React.Component {
                             return (
                                 <View key={cocktail.idDrink}>
                                     <Text
-                                        onPress={() => this.props.navigation.navigate('CocktailDetail', { cocktailId: cocktail.idDrink })}> <Image style={styles.img} source={{uri: cocktail.strDrinkThumb}} />  {cocktail.strDrink}</Text>
+                                        onPress={() => this.props.navigation.navigate('CocktailDetail', { cocktailId: cocktail.idDrink })}> <Image style={styles.img} source={{ uri: cocktail.strDrinkThumb }} />  {cocktail.strDrink}</Text>
                                 </View>
-                                
+
                             )
                         })
                     }
@@ -138,50 +140,66 @@ class Cocktail extends React.Component {
 const styles = StyleSheet.create({
     ScrollView: {
         width: screenWidth,
-        height: screenHeight-20,
+        height: screenHeight - 20,
         backgroundColor: '#ffffff',
         paddingLeft: 10,
-        paddingRight:10,
-        
+        paddingRight: 10,
+
     },
-    view:{
+    view: {
         alignItems: 'center',
-        paddingTop:10,
-        backgroundColor:"#FFFFFF",
+        paddingTop: 10,
+        backgroundColor: "#FFFFFF",
     },
     TextInput: {
         width: screenWidth / 3,
     },
     img: {
-        width: 120, 
+        width: 120,
         height: 120
     },
     button: {
-        marginTop:7,
+        marginTop: 7,
         alignItems: 'center',
         backgroundColor: "#2870f7",
         padding: 10,
-        borderRadius:10
+        borderRadius: 10,
+        flex: 1
     },
-    textInput:{
-        height: 40, 
-        borderColor: 'gray', 
-        borderWidth: 1, 
-        borderRadius:5,
-        paddingLeft:10,
-        paddingBottom:5
+    textInput: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingLeft: 10,
+        paddingBottom: 5
     },
-    loader:{
-        paddingTop:screenHeight/3
+    textInput2: {
+        height: 40,
+        flex: 10,
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingLeft: 10,
+        paddingBottom: 5
     },
-    error:{
-        fontSize:15,
-        textAlign:"center",
-        paddingTop:screenHeight/3
+    loader: {
+        paddingTop: screenHeight / 3
     },
-    found:{
-        fontSize:15,
-        textAlign:"center",
+    error: {
+        fontSize: 15,
+        textAlign: "center",
+        paddingTop: screenHeight / 3
+    },
+    found: {
+        fontSize: 15,
+        textAlign: "center",
+    },
+    search: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
     }
 });
 

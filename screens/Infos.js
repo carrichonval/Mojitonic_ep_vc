@@ -1,8 +1,12 @@
 import React from "react";
-import { View, Text,StatusBar,Dimensions,StyleSheet} from "react-native";
+import { View, Text,StatusBar,Dimensions,StyleSheet,Image} from "react-native";
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
+
+const ginTonic = require('../images/gin-tonic.png')
+const linkedin = require('../images/linkedin.png')
+const mojito = require('../images/mojito.png')
 
 class Infos extends React.Component{
 
@@ -20,11 +24,14 @@ class Infos extends React.Component{
                 </View>
                 <View style={{backgroundColor:'#FFFFFF',flex:1,alignItems:"center",flexDirection:'column'}}>
                     <Text>Eloi</Text>
-                    <Text>logo Linkedin : dfdfdfdf</Text>
+                    <Text style={{height:50}}><Image style={{width: 30,height: 30,resizeMode: 'stretch',}} source={linkedin}></Image> : dfdfdfdf</Text>
+                    
+                    <Image source={mojito}></Image>
+                    <Image source={ginTonic}></Image>
                 </View>
                 <View style={{backgroundColor:'#FFFFFF',flex:1,alignItems:"center",flexDirection:'column'}}>
                     <Text>Valentin</Text>
-                    <Text>logo Linkedin : dfdfdfdf:</Text>
+                    <Text style={{height:50}}><Image style={{width: 30,height: 30,resizeMode: 'stretch',}} source={linkedin}></Image> : dfdfdfdf</Text>
                 </View>
             </View>
             

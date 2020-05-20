@@ -3,9 +3,7 @@ import {View, Text, StatusBar, Dimensions, StyleSheet, Image } from "react-nativ
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-const cocktail = require('../images/cocktail.png')
-const drinking = require('../images/drinking.png')
-const mojitonic = require('../images/test.png')
+const mojitonic = require('../images/mojitonic.png')
 
 class Home extends React.Component {
      
