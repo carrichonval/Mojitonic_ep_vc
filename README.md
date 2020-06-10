@@ -17,3 +17,8 @@ Il contient :
 - Une stack de navigation ( Navigation entre un résultat de la liste de recette et de son détails. )
 ```
 
+Voici le lien de la vidéo Youtube pour une petite démo.
+```
+https://youtu.be/ELY-c2kh2ag
+```
+
